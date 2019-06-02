@@ -50,6 +50,9 @@ func (c *AzblobContainer) Upload(ctx context.Context, fileName string, blobName 
 
 func (c *AzblobContainer) UploadDir(ctx context.Context, dir string, blobPrefix string) error {
 	err := filepath.Walk(dir, func(filename string, info os.FileInfo, err error) error {
+		if err != nil {
+			return errors.Wrap(err, "upload dir")
+		}
 		if info.IsDir() {
 			return nil
 		}
